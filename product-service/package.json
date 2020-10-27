@@ -1,0 +1,12 @@
+{
+  "name": "product-service",
+  "version": "0.0.0",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "deploy": "serverless deploy"
+  },
+  "devDependencies": {
+    "serverless": "^2.8.0"
+  }
+}
