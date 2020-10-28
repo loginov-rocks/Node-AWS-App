@@ -1,12 +1,10 @@
-const HttpError = require('./HttpError.js');
+import HttpError from './HttpError';
 
 /**
  * Specific extension of the HTTP error to represent Not Found error.
  */
-class NotFoundHttpError extends HttpError {
+export default class NotFoundHttpError extends HttpError {
   constructor() {
     super(404, 'Not Found');
   }
 }
-
-module.exports = NotFoundHttpError;

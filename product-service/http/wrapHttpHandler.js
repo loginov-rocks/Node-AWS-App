@@ -1,10 +1,10 @@
-const HttpError = require('./HttpError.js');
+import HttpError from './HttpError';
 
 /**
  * Wrapper for the functions working in the HTTP context, responsible for
  * transforming outcome of the business logic in the HTTP responses.
  */
-module.exports = handler => async event => {
+export default handler => async event => {
   const headers = {
     'Access-Control-Allow-Origin': '*',
   };

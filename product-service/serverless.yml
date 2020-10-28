@@ -6,6 +6,9 @@ provider:
   runtime: nodejs12.x
   profile: danila_loginov
 
+plugins:
+  - serverless-plugin-webpack
+
 functions:
   getProductsList:
     handler: handler.getProductsList

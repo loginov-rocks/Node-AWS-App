@@ -1,10 +1,11 @@
-const database = require('./database/index.js');
-const getProductById = require('./handlers/getProductById/index.js');
-const getProductsList = require('./handlers/getProductsList/index.js');
-const wrapHttpHandler = require('./http/wrapHttpHandler.js');
+import * as database from './database';
+import getProductByIdHandler from './handlers/getProductById';
+import getProductsListHandler from './handlers/getProductsList';
+import wrapHttpHandler from './http/wrapHttpHandler';
 
 /**
  * Index of the functions.
  */
-module.exports.getProductById = wrapHttpHandler(getProductById(database));
-module.exports.getProductsList = wrapHttpHandler(getProductsList(database));
+export const getProductById = wrapHttpHandler(getProductByIdHandler(database));
+
+export const getProductsList = wrapHttpHandler(getProductsListHandler(database));

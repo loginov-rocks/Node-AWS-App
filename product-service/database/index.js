@@ -1,13 +1,13 @@
-const productsList = require('./productsList.json');
+import productsList from './productsList.json';
 
 /**
  * Module pretending to be a database layer.
  * Async approach used to comply with the possible interface in the future integration.
  */
-module.exports.getProductById = async (id) => {
+export const getProductById = async (id) => {
   return productsList.find(product => product.id === id);
 };
 
-module.exports.getProductsList = async () => {
+export const getProductsList = async () => {
   return productsList;
 };
