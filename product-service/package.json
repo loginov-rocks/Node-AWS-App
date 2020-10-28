@@ -4,12 +4,15 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "deploy": "serverless deploy"
+    "deploy": "serverless deploy",
+    "test": "jest"
   },
   "devDependencies": {
     "@babel/core": "^7.12.3",
     "@babel/preset-env": "^7.12.1",
+    "babel-jest": "^26.6.1",
     "babel-loader": "^8.1.0",
+    "jest": "^26.6.1",
     "serverless": "^2.8.0",
     "serverless-plugin-webpack": "^1.5.1",
     "webpack": "^5.3.0"
