@@ -1,58 +1,62 @@
 [
   {
-    "count": 4,
-    "description": "Short Product Description1",
-    "id": "7567ec4b-b10c-48c5-9345-fc73c48a80aa",
-    "price": 2.4,
-    "title": "ProductOne"
+    "id": "first",
+    "title": "Volkswagen Polo",
+    "description": "New car, from 6 to 18 months",
+    "price": 19000
   },
   {
-    "count": 6,
-    "description": "Short Product Description3",
-    "id": "7567ec4b-b10c-48c5-9345-fc73c48a80a0",
-    "price": 10,
-    "title": "ProductNew"
+    "id": "second",
+    "title": "Skoda Octavia",
+    "description": "New car, from 6 to 18 months",
+    "price": 28000
   },
   {
-    "count": 7,
-    "description": "Short Product Description2",
-    "id": "7567ec4b-b10c-48c5-9345-fc73c48a80a2",
-    "price": 23,
-    "title": "ProductTop"
+    "id": "eights",
+    "title": "Mercedes E-Klasse",
+    "description": "From the park, from 1 to 12 months",
+    "price": 56000
   },
   {
-    "count": 12,
-    "description": "Short Product Description7",
-    "id": "7567ec4b-b10c-48c5-9345-fc73c48a80a1",
-    "price": 15,
-    "title": "ProductTitle"
+    "id": "seventh",
+    "title": "BMW 5",
+    "description": "From the park, from 1 to 12 months",
+    "price": 58000
   },
   {
-    "count": 7,
-    "description": "Short Product Description2",
-    "id": "7567ec4b-b10c-48c5-9345-fc73c48a80a2",
-    "price": 23,
-    "title": "Product"
+    "id": "sixth",
+    "title": "Mercedes C-Klasse",
+    "description": "From the park, from 1 to 12 months",
+    "price": 59000
   },
   {
-    "count": 8,
-    "description": "Short Product Description4",
-    "id": "7567ec4b-b10c-48c5-9345-fc73348a80a1",
-    "price": 15,
-    "title": "ProductTest"
+    "id": "third",
+    "title": "BMW X1",
+    "description": "New car, from 6 to 18 months",
+    "price": 60000
   },
   {
-    "count": 2,
-    "description": "Short Product Descriptio1",
-    "id": "7567ec4b-b10c-48c5-9445-fc73c48a80a2",
-    "price": 23,
-    "title": "Product2"
+    "id": "tenth",
+    "title": "Genesis G70",
+    "description": "From the park, from 4 to 12 months",
+    "price": 63000
   },
   {
-    "count": 3,
-    "description": "Short Product Description7",
-    "id": "7567ec4b-b10c-45c5-9345-fc73c48a80a1",
-    "price": 15,
-    "title": "ProductName"
+    "id": "fourth",
+    "title": "Mercedes C-Klasse Sport",
+    "description": "New car, from 6 to 18 months",
+    "price": 65000
+  },
+  {
+    "id": "ninth",
+    "title": "Audi A3",
+    "description": "From the park, from 4 to 12 months",
+    "price": 66000
+  },
+  {
+    "id": "fifth",
+    "title": "Nissan Leaf",
+    "description": "From the park, from 1 to 12 months",
+    "price": 77000
   }
 ]
