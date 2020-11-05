@@ -1,6 +1,6 @@
 {
-  "name": "store",
-  "version": "0.1.0",
+  "name": "nodejs-aws-fe",
+  "version": "0.0.0",
   "private": true,
   "scripts": {
     "start": "react-scripts start",
