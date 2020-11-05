@@ -1,0 +1,30 @@
+service: product-service
+
+provider:
+  name: aws
+  region: eu-central-1
+  runtime: nodejs12.x
+  profile: danila_loginov
+
+plugins:
+  - serverless-plugin-webpack
+
+functions:
+  getProductsList:
+    handler: handler.getProductsList
+    events:
+      - http:
+          path: products
+          method: get
+          cors: true
+  getProductById:
+    handler: handler.getProductById
+    events:
+      - http:
+          path: products/{id}
+          method: get
+          cors: true
+          request:
+            parameters:
+              paths:
+                id: true

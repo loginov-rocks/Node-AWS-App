@@ -1,0 +1,101 @@
+openapi: 3.0.3
+
+info:
+  title: nodejs-aws-be
+  version: 0.0.0
+  contact:
+    name: Danila Loginov
+    url: https://github.com/loginov-rocks/nodejs-aws-be
+
+servers:
+  - url: https://6f9w94w8v8.execute-api.eu-central-1.amazonaws.com/dev/
+
+paths:
+
+  /products:
+    get:
+      operationId: getProductsList
+      tags:
+        - Product Service
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ProductDto'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+
+  /products/{id}:
+    get:
+      operationId: getProductById
+      tags:
+        - Product Service
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductDto'
+        404:
+          $ref: '#/components/responses/NotFound'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+
+components:
+
+  schemas:
+
+    ProductDto:
+      type: object
+      properties:
+        count:
+          type: number
+        description:
+          type: string
+        id:
+          type: string
+        price:
+          type: number
+        title:
+          type: string
+      required:
+        - count
+        - description
+        - id
+        - price
+        - title
+
+    HttpError:
+      type: object
+      properties:
+        message:
+          type: string
+      required:
+        - message
+
+  responses:
+
+    NotFound:
+      description: Not Found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HttpError'
+
+    InternalServerError:
+      description: Internal Server Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HttpError'

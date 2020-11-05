@@ -1,0 +1,12 @@
+{
+  "name": "nodejs-aws-be",
+  "version": "0.0.0",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "deploy": "npm run deploy:product-service",
+    "deploy:product-service": "cd product-service && npm run deploy",
+    "test": "npm run test:product-service",
+    "test:product-service": "cd product-service && npm test"
+  }
+}

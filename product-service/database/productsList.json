@@ -1,0 +1,62 @@
+[
+  {
+    "id": "first",
+    "title": "Volkswagen Polo",
+    "description": "New car, from 6 to 18 months",
+    "price": 19000
+  },
+  {
+    "id": "second",
+    "title": "Skoda Octavia",
+    "description": "New car, from 6 to 18 months",
+    "price": 28000
+  },
+  {
+    "id": "eights",
+    "title": "Mercedes E-Klasse",
+    "description": "From the park, from 1 to 12 months",
+    "price": 56000
+  },
+  {
+    "id": "seventh",
+    "title": "BMW 5",
+    "description": "From the park, from 1 to 12 months",
+    "price": 58000
+  },
+  {
+    "id": "sixth",
+    "title": "Mercedes C-Klasse",
+    "description": "From the park, from 1 to 12 months",
+    "price": 59000
+  },
+  {
+    "id": "third",
+    "title": "BMW X1",
+    "description": "New car, from 6 to 18 months",
+    "price": 60000
+  },
+  {
+    "id": "tenth",
+    "title": "Genesis G70",
+    "description": "From the park, from 4 to 12 months",
+    "price": 63000
+  },
+  {
+    "id": "fourth",
+    "title": "Mercedes C-Klasse Sport",
+    "description": "New car, from 6 to 18 months",
+    "price": 65000
+  },
+  {
+    "id": "ninth",
+    "title": "Audi A3",
+    "description": "From the park, from 4 to 12 months",
+    "price": 66000
+  },
+  {
+    "id": "fifth",
+    "title": "Nissan Leaf",
+    "description": "From the park, from 1 to 12 months",
+    "price": 77000
+  }
+]
