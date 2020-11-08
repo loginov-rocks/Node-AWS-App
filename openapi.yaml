@@ -28,6 +28,23 @@ paths:
                   $ref: '#/components/schemas/ProductDto'
         500:
           $ref: '#/components/responses/InternalServerError'
+    post:
+      operationId: createProduct
+      tags:
+        - Product Service
+      requestBody:
+        $ref: '#/components/requestBodies/CreateProduct'
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductDto'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        500:
+          $ref: '#/components/responses/InternalServerError'
 
   /products/{id}:
     get:
@@ -84,7 +101,33 @@ components:
       required:
         - message
 
+  requestBodies:
+
+    CreateProduct:
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              description:
+                type: string
+              price:
+                type: number
+              title:
+                type: string
+            required:
+              - description
+              - price
+              - title
+
   responses:
+
+    BadRequest:
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HttpError'
 
     NotFound:
       description: Not Found

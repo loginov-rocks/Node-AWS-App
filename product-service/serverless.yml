@@ -17,6 +17,13 @@ plugins:
   - serverless-plugin-webpack
 
 functions:
+  createProduct:
+    handler: handler.createProduct
+    events:
+      - http:
+          path: products
+          method: post
+          cors: true
   getProductsList:
     handler: handler.getProductsList
     events:

@@ -11,22 +11,60 @@ const clientOptions = {
   password: process.env.DB_PASSWORD,
 };
 
-export const getProductById = async (id) => {
+export const createProduct = async ({ description, price, title }) => {
   const client = new Client(clientOptions);
   await client.connect();
-  let result;
+  let id;
 
   try {
-    result = await client.query(
-        'SELECT products.*, stocks.count FROM products INNER JOIN stocks ON stocks.product_id = products.id WHERE id = $1',
-        [id]);
+    await client.query('BEGIN');
+
+    const result = await client.query(
+        'INSERT INTO products (description, price, title) VALUES ($1, $2, $3) RETURNING id',
+        [description, price, title],
+    );
+
+    id = result.rows[0].id;
+
+    await client.query('INSERT INTO stocks (product_id, count) VALUES ($1, 0)', [id]);
+
+    await client.query('COMMIT');
   } catch {
-    return undefined;
+    await client.query('ROLLBACK');
   }
 
   await client.end();
 
-  return result.rows && result.rows[0] || undefined;
+  if (!id) {
+    return undefined;
+  }
+
+  return getProductById(id);
+};
+
+export const getProductById = async (id) => {
+  const client = new Client(clientOptions);
+  await client.connect();
+  let product;
+
+  try {
+    const result = await client.query(
+        'SELECT products.*, stocks.count FROM products INNER JOIN stocks ON stocks.product_id = products.id WHERE id = $1',
+        [id],
+    );
+
+    product = result.rows[0];
+  } catch {
+    // Do nothing.
+  }
+
+  await client.end();
+
+  if (!product) {
+    return undefined;
+  }
+
+  return product;
 };
 
 export const getProductsList = async () => {
@@ -34,7 +72,8 @@ export const getProductsList = async () => {
   await client.connect();
 
   const result = await client.query(
-      'SELECT products.*, stocks.count FROM products INNER JOIN stocks ON stocks.product_id = products.id');
+      'SELECT products.*, stocks.count FROM products INNER JOIN stocks ON stocks.product_id = products.id',
+  );
 
   await client.end();
 
