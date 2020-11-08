@@ -22,6 +22,8 @@ export default handler => async event => {
       };
     }
 
+    console.log('Unexpected error caught:', error);
+
     return {
       headers,
       statusCode: 500,

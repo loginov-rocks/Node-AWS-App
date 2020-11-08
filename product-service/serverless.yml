@@ -6,6 +6,13 @@ provider:
   runtime: nodejs12.x
   profile: danila_loginov
 
+  environment:
+    DB_HOST: host
+    DB_PORT: port
+    DB_DATABASE: database
+    DB_USER: user
+    DB_PASSWORD: password
+
 plugins:
   - serverless-plugin-webpack
 

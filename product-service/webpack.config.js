@@ -1,3 +1,5 @@
+const { IgnorePlugin } = require('webpack');
+
 module.exports = {
   mode: 'production',
   module: {
@@ -9,5 +11,10 @@ module.exports = {
       },
     ],
   },
+  plugins: [
+    new IgnorePlugin({
+      resourceRegExp: /^pg-native$/,
+    }),
+  ],
   target: 'node',
 };
