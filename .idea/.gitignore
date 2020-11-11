@@ -1,2 +1,6 @@
 # Default ignored files
 /workspace.xml
+
+/dataSources
+/httpRequests
+dataSources.local.xml

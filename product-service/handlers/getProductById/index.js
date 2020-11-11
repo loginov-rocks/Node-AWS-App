@@ -5,6 +5,8 @@ import NotFoundHttpError from '../../http/NotFoundHttpError';
  * Database layer injected as a dependency.
  */
 export default database => async event => {
+  console.log('getProductById triggered:', event);
+
   const id = event.pathParameters.id;
   const product = await database.getProductById(id);
 
