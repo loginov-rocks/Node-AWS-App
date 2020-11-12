@@ -1,7 +1,7 @@
 openapi: 3.0.3
 
 info:
-  title: nodejs-aws-be
+  title: nodejs-aws-be/product-service
   version: 0.0.0
   contact:
     name: Danila Loginov

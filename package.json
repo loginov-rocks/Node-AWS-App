@@ -4,9 +4,11 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "deploy": "npm run deploy:product-service",
+    "deploy": "npm run deploy:import-service && npm run deploy:product-service",
+    "deploy:import-service": "cd import-service && npm run deploy",
     "deploy:product-service": "cd product-service && npm run deploy",
-    "test": "npm run test:product-service",
+    "test": "npm run test:import-service && npm run test:product-service",
+    "test:import-service": "cd import-service && npm test",
     "test:product-service": "cd product-service && npm test"
   }
 }
