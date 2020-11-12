@@ -1,10 +1,10 @@
-import AWS from 'aws-sdk';
+import AwsSdk from 'aws-sdk';
 
 import BadRequestHttpError from '../../http/BadRequestHttpError';
 
 const bucketName = process.env.S3_BUCKET_NAME;
 const region = process.env.S3_REGION;
-const prefix = process.env.S3_UPLOADED_PREFIX;
+const uploadedPrefix = process.env.S3_UPLOADED_PREFIX;
 
 export default async (event) => {
   console.log('importProductsFile triggered:', event);
@@ -15,8 +15,8 @@ export default async (event) => {
     throw new BadRequestHttpError('Missing name query parameter');
   }
 
-  const key = `${prefix}/${fileName}`;
-  const s3 = new AWS.S3({ region });
+  const key = uploadedPrefix + fileName;
+  const s3 = new AwsSdk.S3({ region });
 
   const alreadyExists = await s3.headObject({
     Bucket: bucketName,

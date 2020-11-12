@@ -5,7 +5,8 @@
   "private": true,
   "scripts": {
     "deploy": "serverless deploy",
-    "test": "jest"
+    "test": "jest",
+    "test:coverage": "jest --coverage"
   },
   "dependencies": {
     "pg": "^8.4.2"
