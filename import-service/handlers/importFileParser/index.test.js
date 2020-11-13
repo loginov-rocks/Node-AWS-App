@@ -9,7 +9,7 @@ const fixture = path.resolve('__fixtures__/import-test.csv');
 it('parses and moves the file', async () => {
   const getObjectMock = jest.fn((params, callback) => {
     // TODO: This is not working, on(data) not triggered.
-    callback(null, Buffer.from(fs.readFileSync(fixture)));
+    callback(null, fs.readFileSync(fixture));
   });
 
   const copyObjectMock = jest.fn((params, callback) => {
@@ -20,6 +20,7 @@ it('parses and moves the file', async () => {
     callback(null);
   });
 
+  // TODO: Works only if fs.readFileSync(fixture) passed directly instead of getObjectMock.
   AwsSdkMock.mock('S3', 'getObject', getObjectMock);
   AwsSdkMock.mock('S3', 'copyObject', copyObjectMock);
   AwsSdkMock.mock('S3', 'deleteObject', deleteObjectMock);

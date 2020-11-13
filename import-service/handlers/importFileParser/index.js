@@ -11,7 +11,7 @@ export default async (event) => {
 
   const s3 = new AwsSdk.S3({ region });
 
-  for (const record of event.Records) {
+  const parallelPromises = event.Records.map(async (record) => {
     const source = record.s3.object.key;
     const destination = parsedPrefix + source.slice(uploadedPrefix.length);
 
@@ -21,13 +21,17 @@ export default async (event) => {
         Key: source,
       })
           .createReadStream()
+          // Capture S3 service errors separately.
+          .on('error', error => {
+            reject(error);
+          })
           .pipe(csvParser())
+          .on('error', error => {
+            reject(error);
+          })
           // TODO: This is not working, on(data) not triggered.
           .on('data', data => {
             console.log('importFileParser read data:', source, data);
-          })
-          .on('error', error => {
-            reject(error);
           })
           .on('end', () => {
             console.log('importFileParser finished reading:', source);
@@ -49,5 +53,9 @@ export default async (event) => {
         .promise();
 
     console.log('importFileParser moved file:', source, destination);
-  }
+  });
+
+  await Promise.all(parallelPromises);
+
+  console.log('importFileParser finished');
 }
