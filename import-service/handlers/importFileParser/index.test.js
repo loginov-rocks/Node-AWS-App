@@ -25,6 +25,8 @@ it('parses and moves the file', async () => {
   AwsSdkMock.mock('S3', 'copyObject', copyObjectMock);
   AwsSdkMock.mock('S3', 'deleteObject', deleteObjectMock);
 
+  const consoleSpy = jest.spyOn(console, 'log');
+
   const result = await importFileParser({
     Records: [
       {
@@ -44,4 +46,15 @@ it('parses and moves the file', async () => {
       .toStrictEqual({ Bucket: 'bucket', CopySource: 'bucket/uploaded/key', Key: 'parsed/key' });
   expect(deleteObjectMock.mock.calls[0][0])
       .toStrictEqual({ Bucket: 'bucket', Key: 'uploaded/key' });
+  // Check whether console.log() has been triggered on read.
+  expect(consoleSpy.mock.calls[1]).toEqual([
+    'importFileParser read data:',
+    'uploaded/key',
+    {
+      count: '10',
+      description: 'Description 1',
+      price: '100',
+      title: 'Title 1',
+    },
+  ]);
 });

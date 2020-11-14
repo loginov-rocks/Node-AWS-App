@@ -4,7 +4,7 @@ import HttpError from './HttpError';
  * Wrapper for the functions working in the HTTP context, responsible for
  * transforming outcome of the business logic in the HTTP responses.
  */
-export default handler => async event => {
+export default (handler, defaultStatusCode = 200) => async event => {
   const headers = {
     'Access-Control-Allow-Origin': '*',
   };
@@ -33,7 +33,7 @@ export default handler => async event => {
 
   return {
     headers,
-    statusCode: 200,
+    statusCode: defaultStatusCode,
     body: JSON.stringify(result),
   };
 };
