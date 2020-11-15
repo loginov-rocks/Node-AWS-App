@@ -29,7 +29,6 @@ export default async (event) => {
           .on('error', error => {
             reject(error);
           })
-          // TODO: This is not working, on(data) not triggered.
           .on('data', data => {
             console.log('importFileParser read data:', source, data);
           })
