@@ -12,6 +12,12 @@ provider:
     S3_REGION: eu-central-1
     S3_UPLOADED_PREFIX: uploaded/
 
+    SNS_TOPIC:
+      Ref: SNSTopic
+
+    SQS_QUEUE:
+      Ref: SQSQueue
+
   iamRoleStatements:
     - Action:
         - s3:ListBucket
@@ -23,9 +29,37 @@ provider:
       Effect: Allow
       Resource:
         - arn:aws:s3:::${self:provider.environment.S3_BUCKET_NAME}/*
+    - Action:
+        - sqs:*
+      Effect: Allow
+      Resource:
+        - Fn::GetAtt: [ SQSQueue, Arn ]
+    - Action:
+        - sns:*
+      Effect: Allow
+      Resource:
+        Ref: SNSTopic
 
 plugins:
   - serverless-plugin-webpack
+
+resources:
+  Resources:
+    SNSSubscription:
+      Type: AWS::SNS::Subscription
+      Properties:
+        Endpoint: danila@loginov.rocks
+        Protocol: email
+        TopicArn:
+          Ref: SNSTopic
+    SNSTopic:
+      Type: AWS::SNS::Topic
+      Properties:
+        TopicName: nodejs-aws-be-import-topic
+    SQSQueue:
+      Type: AWS::SQS::Queue
+      Properties:
+        QueueName: nodejs-aws-be-import-queue
 
 functions:
   importFileParser:
@@ -48,3 +82,12 @@ functions:
             parameters:
               querystrings:
                 name: true
+  queueHandler:
+    handler: handler.queueHandler
+    events:
+      - sqs:
+          batchSize: 2
+          arn:
+            Fn::GetAtt:
+              - SQSQueue
+              - Arn
