@@ -1,7 +1,8 @@
 service: import-service
 
 custom:
-  sqsQueue: catalogItemsQueue
+  # Variables not exposed to the application.
+  sqsQueueName: catalogItemsQueue
 
 provider:
   name: aws
@@ -10,6 +11,7 @@ provider:
   profile: danila_loginov
 
   environment:
+    # Variables exposed to the application.
     S3_BUCKET_NAME: bucket
     S3_PARSED_PREFIX: parsed/
     S3_REGION: eu-central-1
@@ -33,7 +35,7 @@ provider:
         - sqs:*
       Effect: Allow
       Resource:
-        - Fn::GetAtt: [ SqsQueue, Arn ]
+        - !GetAtt SqsQueue.Arn
 
 plugins:
   - serverless-plugin-webpack
@@ -43,12 +45,12 @@ resources:
     SqsQueue:
       Type: AWS::SQS::Queue
       Properties:
-        QueueName: ${self:custom.sqsQueue}
+        QueueName: ${self:custom.sqsQueueName}
   Outputs:
     SqsQueueArn:
       Value: !GetAtt SqsQueue.Arn
       Export:
-        Name: ${self:custom.sqsQueue}Arn
+        Name: ${self:custom.sqsQueueName}Arn
 
 functions:
   importFileParser:

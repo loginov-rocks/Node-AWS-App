@@ -34,7 +34,8 @@ export default async (event) => {
           .on('data', data => {
             console.log('importFileParser read data:', source, data);
 
-            // TODO: WIP.
+            // Warning! This can be a bottleneck since the callback is executed
+            // after the promise has been resolved.
             sqs.sendMessage({
               MessageBody: JSON.stringify(data),
               QueueUrl: sqsQueueUrl,

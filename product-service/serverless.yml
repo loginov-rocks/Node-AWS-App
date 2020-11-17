@@ -1,7 +1,10 @@
 service: product-service
 
 custom:
-  sqsQueue: catalogItemsQueue
+  # Variables not exposed to the application.
+  snsSubscriptionEndpoint: danila@loginov.rocks
+  snsTopicName: createProductTopic
+  sqsQueueName: catalogItemsQueue
 
 provider:
   name: aws
@@ -10,6 +13,7 @@ provider:
   profile: danila_loginov
 
   environment:
+    # Variables exposed to the application.
     DB_HOST: host
     DB_PORT: port
     DB_DATABASE: database
@@ -24,12 +28,12 @@ provider:
         - sns:*
       Effect: Allow
       Resource:
-        Ref: SnsTopic
+        - Ref: SnsTopic
     - Action:
         - sqs:*
       Effect: Allow
       Resource:
-        - Fn::ImportValue: ${self:custom.sqsQueue}Arn
+        - !ImportValue ${self:custom.sqsQueueName}Arn
 
 plugins:
   - serverless-plugin-webpack
@@ -39,23 +43,23 @@ resources:
     SnsSubscription:
       Type: AWS::SNS::Subscription
       Properties:
-        Endpoint: danila@loginov.rocks
+        Endpoint: ${self:custom.snsSubscriptionEndpoint}
         Protocol: email
         TopicArn:
           Ref: SnsTopic
     SnsTopic:
       Type: AWS::SNS::Topic
       Properties:
-        TopicName: createProductTopic
+        TopicName: ${self:custom.snsTopicName}
 
 functions:
   catalogBatchProcess:
     handler: handler.catalogBatchProcess
     events:
       - sqs:
-          batchSize: 2
+          batchSize: 5
           arn:
-            Fn::ImportValue: ${self:custom.sqsQueue}Arn
+            !ImportValue ${self:custom.sqsQueueName}Arn
   createProduct:
     handler: handler.createProduct
     events:
