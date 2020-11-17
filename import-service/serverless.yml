@@ -1,5 +1,8 @@
 service: import-service
 
+custom:
+  sqsQueue: catalogItemsQueue
+
 provider:
   name: aws
   region: eu-central-1
@@ -12,11 +15,8 @@ provider:
     S3_REGION: eu-central-1
     S3_UPLOADED_PREFIX: uploaded/
 
-    SNS_TOPIC:
-      Ref: SNSTopic
-
-    SQS_QUEUE:
-      Ref: SQSQueue
+    SQS_QUEUE_URL:
+      Ref: SqsQueue
 
   iamRoleStatements:
     - Action:
@@ -33,33 +33,22 @@ provider:
         - sqs:*
       Effect: Allow
       Resource:
-        - Fn::GetAtt: [ SQSQueue, Arn ]
-    - Action:
-        - sns:*
-      Effect: Allow
-      Resource:
-        Ref: SNSTopic
+        - Fn::GetAtt: [ SqsQueue, Arn ]
 
 plugins:
   - serverless-plugin-webpack
 
 resources:
   Resources:
-    SNSSubscription:
-      Type: AWS::SNS::Subscription
-      Properties:
-        Endpoint: danila@loginov.rocks
-        Protocol: email
-        TopicArn:
-          Ref: SNSTopic
-    SNSTopic:
-      Type: AWS::SNS::Topic
-      Properties:
-        TopicName: nodejs-aws-be-import-topic
-    SQSQueue:
+    SqsQueue:
       Type: AWS::SQS::Queue
       Properties:
-        QueueName: nodejs-aws-be-import-queue
+        QueueName: ${self:custom.sqsQueue}
+  Outputs:
+    SqsQueueArn:
+      Value: !GetAtt SqsQueue.Arn
+      Export:
+        Name: ${self:custom.sqsQueue}Arn
 
 functions:
   importFileParser:
@@ -82,12 +71,3 @@ functions:
             parameters:
               querystrings:
                 name: true
-  queueHandler:
-    handler: handler.queueHandler
-    events:
-      - sqs:
-          batchSize: 2
-          arn:
-            Fn::GetAtt:
-              - SQSQueue
-              - Arn

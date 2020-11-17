@@ -1,5 +1,8 @@
 service: product-service
 
+custom:
+  sqsQueue: catalogItemsQueue
+
 provider:
   name: aws
   region: eu-central-1
@@ -13,10 +16,46 @@ provider:
     DB_USER: user
     DB_PASSWORD: password
 
+    SNS_TOPIC_ARN:
+      Ref: SnsTopic
+
+  iamRoleStatements:
+    - Action:
+        - sns:*
+      Effect: Allow
+      Resource:
+        Ref: SnsTopic
+    - Action:
+        - sqs:*
+      Effect: Allow
+      Resource:
+        - Fn::ImportValue: ${self:custom.sqsQueue}Arn
+
 plugins:
   - serverless-plugin-webpack
 
+resources:
+  Resources:
+    SnsSubscription:
+      Type: AWS::SNS::Subscription
+      Properties:
+        Endpoint: danila@loginov.rocks
+        Protocol: email
+        TopicArn:
+          Ref: SnsTopic
+    SnsTopic:
+      Type: AWS::SNS::Topic
+      Properties:
+        TopicName: createProductTopic
+
 functions:
+  catalogBatchProcess:
+    handler: handler.catalogBatchProcess
+    events:
+      - sqs:
+          batchSize: 2
+          arn:
+            Fn::ImportValue: ${self:custom.sqsQueue}Arn
   createProduct:
     handler: handler.createProduct
     events:

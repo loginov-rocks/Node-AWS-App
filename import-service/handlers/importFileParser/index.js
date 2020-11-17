@@ -5,7 +5,7 @@ const bucketName = process.env.S3_BUCKET_NAME;
 const parsedPrefix = process.env.S3_PARSED_PREFIX;
 const region = process.env.S3_REGION;
 const uploadedPrefix = process.env.S3_UPLOADED_PREFIX;
-const sqsQueue = process.env.SQS_QUEUE;
+const sqsQueueUrl = process.env.SQS_QUEUE_URL;
 
 export default async (event) => {
   console.log('importFileParser triggered:', event);
@@ -36,10 +36,14 @@ export default async (event) => {
 
             // TODO: WIP.
             sqs.sendMessage({
-              QueueUrl: sqsQueue,
-              MessageBody: data,
-            }, () => {
-              console.log('Send message');
+              MessageBody: JSON.stringify(data),
+              QueueUrl: sqsQueueUrl,
+            }, (error, _data) => {
+              if (error) {
+                console.error('importFileParser SQS error:', source, error);
+              } else {
+                console.log('importFileParser SQS data:', source, _data);
+              }
             });
 
           })
