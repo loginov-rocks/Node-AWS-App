@@ -22,7 +22,7 @@ export default (handler, defaultStatusCode = 200) => async event => {
       };
     }
 
-    console.log('Unexpected error caught:', error);
+    console.error('Unexpected error caught:', error);
 
     return {
       headers,
