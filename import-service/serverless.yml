@@ -1,0 +1,50 @@
+service: import-service
+
+provider:
+  name: aws
+  region: eu-central-1
+  runtime: nodejs12.x
+  profile: danila_loginov
+
+  environment:
+    S3_BUCKET_NAME: bucket
+    S3_PARSED_PREFIX: parsed/
+    S3_REGION: eu-central-1
+    S3_UPLOADED_PREFIX: uploaded/
+
+  iamRoleStatements:
+    - Action:
+        - s3:ListBucket
+      Effect: Allow
+      Resource:
+        - arn:aws:s3:::${self:provider.environment.S3_BUCKET_NAME}
+    - Action:
+        - s3:*
+      Effect: Allow
+      Resource:
+        - arn:aws:s3:::${self:provider.environment.S3_BUCKET_NAME}/*
+
+plugins:
+  - serverless-plugin-webpack
+
+functions:
+  importFileParser:
+    handler: handler.importFileParser
+    events:
+      - s3:
+          bucket: ${self:provider.environment.S3_BUCKET_NAME}
+          event: s3:ObjectCreated:*
+          rules:
+            - prefix: ${self:provider.environment.S3_UPLOADED_PREFIX}
+          existing: true
+  importProductsFile:
+    handler: handler.importProductsFile
+    events:
+      - http:
+          path: import
+          method: get
+          cors: true
+          request:
+            parameters:
+              querystrings:
+                name: true

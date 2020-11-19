@@ -11,20 +11,18 @@ export default database => async event => {
   try {
     ({ description, price, title } = JSON.parse(event.body));
   } catch {
-    // Error type 1.
-    throw new BadRequestHttpError();
+    throw new BadRequestHttpError('Request body is invalid');
   }
 
   if (!description || !price || !title) {
-    // Error type 2.
-    throw new BadRequestHttpError();
+    throw new BadRequestHttpError('Missing description, price or title attributes');
   }
 
   const product = await database.createProduct({ description, price, title });
 
   if (!product) {
     // Error type 3.
-    throw new BadRequestHttpError();
+    throw new BadRequestHttpError('Product creation failed');
   }
 
   return product;

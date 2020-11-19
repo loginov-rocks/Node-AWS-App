@@ -1,14 +1,14 @@
 openapi: 3.0.3
 
 info:
-  title: nodejs-aws-be
+  title: nodejs-aws-be/product-service
   version: 0.0.0
   contact:
     name: Danila Loginov
     url: https://github.com/loginov-rocks/nodejs-aws-be
 
 servers:
-  - url: https://6f9w94w8v8.execute-api.eu-central-1.amazonaws.com/dev/
+  - url: https://jmw5ojxm2a.execute-api.eu-central-1.amazonaws.com/dev/
 
 paths:
 
