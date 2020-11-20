@@ -2,7 +2,8 @@ service: product-service
 
 custom:
   # Variables not exposed to the application.
-  snsSubscriptionEndpoint: danila@loginov.rocks
+  snsSubscriptionSingleEndpoint: email1@example.com
+  snsSubscriptionMultipleEndpoint: email2@example.com
   snsTopicName: createProductTopic
   sqsQueueName: catalogItemsQueue
 
@@ -40,10 +41,27 @@ plugins:
 
 resources:
   Resources:
-    SnsSubscription:
+    SnsSubscriptionSingle:
       Type: AWS::SNS::Subscription
       Properties:
-        Endpoint: ${self:custom.snsSubscriptionEndpoint}
+        Endpoint: ${self:custom.snsSubscriptionSingleEndpoint}
+        FilterPolicy:
+          numOfProducts:
+            - numeric:
+                - "<"
+                - 2
+        Protocol: email
+        TopicArn:
+          Ref: SnsTopic
+    SnsSubscriptionMultiple:
+      Type: AWS::SNS::Subscription
+      Properties:
+        Endpoint: ${self:custom.snsSubscriptionMultipleEndpoint}
+        FilterPolicy:
+          numOfProducts:
+            - numeric:
+                - ">="
+                - 2
         Protocol: email
         TopicArn:
           Ref: SnsTopic

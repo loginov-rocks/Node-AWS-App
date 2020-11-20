@@ -38,6 +38,12 @@ export default database => async (event) => {
   const sns = new AwsSdk.SNS();
   const result = await sns.publish({
     Message: `Products with the following IDs have been created: ${products.map(product => product.id).join(', ')}.`,
+    MessageAttributes: {
+      numOfProducts: {
+        DataType: 'Number',
+        StringValue: products.length.toString(),
+      },
+    },
     TopicArn: snsTopicArn,
   })
       .promise();
