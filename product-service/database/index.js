@@ -11,7 +11,7 @@ const clientOptions = {
   password: process.env.DB_PASSWORD,
 };
 
-export const createProduct = async ({ description, price, title }) => {
+export const createProduct = async ({ count, description, price, title }) => {
   const client = new Client(clientOptions);
   await client.connect();
   let id;
@@ -26,7 +26,7 @@ export const createProduct = async ({ description, price, title }) => {
 
     id = result.rows[0].id;
 
-    await client.query('INSERT INTO stocks (product_id, count) VALUES ($1, 0)', [id]);
+    await client.query('INSERT INTO stocks (product_id, count) VALUES ($1, $2)', [id, count]);
 
     await client.query('COMMIT');
   } catch {

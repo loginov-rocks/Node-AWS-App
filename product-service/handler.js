@@ -5,10 +5,7 @@ import getProductByIdHandler from './handlers/getProductById';
 import getProductsListHandler from './handlers/getProductsList';
 import wrapHttpHandler from './http/wrapHttpHandler';
 
-/**
- * Index of the functions.
- */
-export const catalogBatchProcess = wrapHttpHandler(catalogBatchProcessHandler, 202);
+export const catalogBatchProcess = catalogBatchProcessHandler(database);
 
 export const createProduct = wrapHttpHandler(createProductHandler(database));
 

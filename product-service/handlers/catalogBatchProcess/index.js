@@ -2,15 +2,42 @@ import AwsSdk from 'aws-sdk';
 
 const snsTopicArn = process.env.SNS_TOPIC_ARN;
 
-// TODO: Iterate over all SQS messages and create corresponding products in the
-//  products table, send an email once it creates products, cover by unit tests.
-export default async (event) => {
+export default database => async (event) => {
   console.log('catalogBatchProcess triggered:', event);
 
+  const productsResults = await Promise.all(event.Records.map(async record => {
+    let count, description, price, title;
+
+    try {
+      ({ count, description, price, title } = JSON.parse(record.body));
+    } catch {
+      console.error('catalogBatchProcess found invalid JSON record:', record.body);
+      return;
+    }
+
+    if (!count || !description || !price || !title) {
+      console.error('catalogBatchProcess found invalid data record');
+      return;
+    }
+
+    const productData = { count, description, price, title };
+    const product = await database.createProduct(productData);
+
+    if (!product) {
+      console.error('catalogBatchProcess failed to create product:', productData);
+      return;
+    }
+
+    return product;
+  }));
+
+  const products = productsResults.filter(value => value);
+
+  console.log('catalogBatchProcess created products:', products);
+
   const sns = new AwsSdk.SNS();
-  const data = event.Records.map(({ body }) => body);
   const result = await sns.publish({
-    Message: JSON.stringify(data),
+    Message: `Products with the following IDs have been created: ${products.map(product => product.id).join(', ')}.`,
     TopicArn: snsTopicArn,
   })
       .promise();
