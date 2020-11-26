@@ -6,6 +6,18 @@ provider:
   runtime: nodejs12.x
   profile: danila_loginov
 
+  environment:
+    # Variables exposed to the application.
+    username: password
+
+plugins:
+  - serverless-plugin-webpack
+
 functions:
   basicAuthorizer:
     handler: handler.basicAuthorizer
+    events:
+      - http:
+          path: token
+          method: get
+          cors: true

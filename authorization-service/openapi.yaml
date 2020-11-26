@@ -8,11 +8,66 @@ info:
     url: https://github.com/loginov-rocks/nodejs-aws-be
 
 servers:
-  - url: https://.execute-api.eu-central-1.amazonaws.com/dev/
+  - url: https://5e78iuuugj.execute-api.eu-central-1.amazonaws.com/dev/
+
+paths:
+
+  /token:
+    get:
+      operationId: basicAuthorizer
+      security:
+        - basicAuth: [ ]
+      tags:
+        - Authorization Service
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PolicyDto'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+        403:
+          $ref: '#/components/responses/Forbidden'
+        500:
+          $ref: '#/components/responses/InternalServerError'
 
 components:
 
   schemas:
+
+    PolicyDto:
+      type: object
+      properties:
+        principalId:
+          type: string
+        policyDocument:
+          type: object
+          properties:
+            Version:
+              type: string
+            Statement:
+              type: array
+              items:
+                type: object
+                properties:
+                  Action:
+                    type: string
+                  Effect:
+                    type: string
+                  Resource:
+                    type: string
+                required:
+                  - Action
+                  - Effect
+                  - Resource
+          required:
+            - Version
+            - Statement
+      required:
+        - principalId
+        - policyDocument
 
     HttpError:
       type: object
@@ -21,6 +76,12 @@ components:
           type: string
       required:
         - message
+
+  securitySchemes:
+
+    basicAuth:
+      type: http
+      scheme: basic
 
   responses:
 
