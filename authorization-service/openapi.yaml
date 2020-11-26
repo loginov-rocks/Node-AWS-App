@@ -1,0 +1,23 @@
+openapi: 3.0.3
+
+info:
+  title: nodejs-aws-be/authorization-service
+  version: 0.0.0
+  contact:
+    name: Danila Loginov
+    url: https://github.com/loginov-rocks/nodejs-aws-be
+
+servers:
+  - url: https://.execute-api.eu-central-1.amazonaws.com/dev/
+
+components:
+
+  schemas:
+
+    HttpError:
+      type: object
+      properties:
+        message:
+          type: string
+      required:
+        - message

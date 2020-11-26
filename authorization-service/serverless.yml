@@ -1,0 +1,11 @@
+service: authorization-service
+
+provider:
+  name: aws
+  region: eu-central-1
+  runtime: nodejs12.x
+  profile: danila_loginov
+
+functions:
+  basicAuthorizer:
+    handler: handler.basicAuthorizer
