@@ -6,19 +6,19 @@ import BadRequestHttpError from '../../http/BadRequestHttpError';
  */
 export default database => async event => {
   console.log('createProduct triggered:', event);
-  let description, price, title;
+  let count, description, price, title;
 
   try {
-    ({ description, price, title } = JSON.parse(event.body));
+    ({ count, description, price, title } = JSON.parse(event.body));
   } catch {
     throw new BadRequestHttpError('Request body is invalid');
   }
 
-  if (!description || !price || !title) {
+  if (!count || !description || !price || !title) {
     throw new BadRequestHttpError('Missing description, price or title attributes');
   }
 
-  const product = await database.createProduct({ description, price, title });
+  const product = await database.createProduct({ count, description, price, title });
 
   if (!product) {
     // Error type 3.
