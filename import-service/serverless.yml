@@ -2,6 +2,7 @@ service: import-service
 
 custom:
   # Variables not exposed to the application.
+  authorizerArn: authorizer
   sqsQueueName: catalogItemsQueue
 
 provider:
@@ -73,3 +74,9 @@ functions:
             parameters:
               querystrings:
                 name: true
+          authorizer:
+            name: basicAuthorizer
+            arn: ${self:custom.authorizerArn}
+            resultTtlInSeconds: 0
+            identitySource: method.request.header.Authorization
+            type: token

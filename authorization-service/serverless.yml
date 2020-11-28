@@ -16,8 +16,3 @@ plugins:
 functions:
   basicAuthorizer:
     handler: handler.basicAuthorizer
-    events:
-      - http:
-          path: token
-          method: get
-          cors: true

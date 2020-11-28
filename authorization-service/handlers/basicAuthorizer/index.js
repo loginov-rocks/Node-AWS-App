@@ -1,26 +1,34 @@
-import ForbiddenHttpError from '../../http/ForbiddenHttpError';
-import UnauthorizedHttpError from '../../http/UnauthorizedHttpError';
-
 import generatePolicy from './generatePolicy';
 
-export default (event) => {
+/**
+ * @see https://docs.aws.amazon.com/apigateway/latest/developerguide/apigateway-use-lambda-authorizer.html#api-gateway-lambda-authorizer-lambda-function-create
+ */
+export default (event, context, callback) => {
   console.log('basicAuthorizer triggered:', event);
 
   if (event.type !== 'TOKEN' || !event.authorizationToken) {
-    throw new UnauthorizedHttpError();
+    // Case: no authorization data provided.
+    callback('Unauthorized');
+    return;
   }
+
+  let encoded, username, password;
 
   try {
-    const encoded = event.authorizationToken.split(' ')[1];
+    encoded = event.authorizationToken.split(' ')[1];
     const buffer = Buffer.from(encoded, 'base64');
-    const [username, password] = buffer.toString('utf-8').split(':');
-
-    // TODO: Approach?
-    const storedUserPassword = process.env[username];
-    const effect = !storedUserPassword || storedUserPassword !== password ? 'Deny' : 'Allow';
-
-    return generatePolicy(encoded, event.methodArn, effect);
+    [username, password] = buffer.toString('utf-8').split(':');
   } catch {
-    throw new ForbiddenHttpError();
+    // Case: invalid authorization data.
+    callback('Unauthorized');
+    return;
   }
+
+  // TODO: Approach?
+  const storedUserPassword = process.env[username];
+  const isAllowed = storedUserPassword && storedUserPassword === password;
+
+  const policy = generatePolicy(encoded, isAllowed, event.methodArn);
+
+  callback(null, policy);
 }
