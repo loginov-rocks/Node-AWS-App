@@ -20,6 +20,7 @@
     "babel-loader": "^8.1.0",
     "jest": "^26.6.1",
     "serverless": "^2.8.0",
+    "serverless-dotenv-plugin": "^3.1.0",
     "serverless-plugin-webpack": "^1.5.1",
     "webpack": "^5.3.0"
   },

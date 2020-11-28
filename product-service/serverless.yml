@@ -2,8 +2,6 @@ service: product-service
 
 custom:
   # Variables not exposed to the application.
-  snsSubscriptionSingleEndpoint: email1@example.com
-  snsSubscriptionMultipleEndpoint: email2@example.com
   snsTopicName: createProductTopic
   sqsQueueName: catalogItemsQueue
 
@@ -15,12 +13,6 @@ provider:
 
   environment:
     # Variables exposed to the application.
-    DB_HOST: host
-    DB_PORT: port
-    DB_DATABASE: database
-    DB_USER: user
-    DB_PASSWORD: password
-
     SNS_TOPIC_ARN:
       Ref: SnsTopic
 
@@ -37,6 +29,7 @@ provider:
         - !ImportValue ${self:custom.sqsQueueName}Arn
 
 plugins:
+  - serverless-dotenv-plugin
   - serverless-plugin-webpack
 
 resources:
@@ -44,7 +37,7 @@ resources:
     SnsSubscriptionSingle:
       Type: AWS::SNS::Subscription
       Properties:
-        Endpoint: ${self:custom.snsSubscriptionSingleEndpoint}
+        Endpoint: ${env:SNS_SUBSCRIPTION_SINGLE_ENDPOINT}
         FilterPolicy:
           numOfProducts:
             - numeric:
@@ -56,7 +49,7 @@ resources:
     SnsSubscriptionMultiple:
       Type: AWS::SNS::Subscription
       Properties:
-        Endpoint: ${self:custom.snsSubscriptionMultipleEndpoint}
+        Endpoint: ${env:SNS_SUBSCRIPTION_MULTIPLE_ENDPOINT}
         FilterPolicy:
           numOfProducts:
             - numeric:

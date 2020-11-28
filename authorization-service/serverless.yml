@@ -6,11 +6,8 @@ provider:
   runtime: nodejs12.x
   profile: danila_loginov
 
-  environment:
-    # Variables exposed to the application.
-    username: password
-
 plugins:
+  - serverless-dotenv-plugin
   - serverless-plugin-webpack
 
 functions:
