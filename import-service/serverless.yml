@@ -39,6 +39,29 @@ plugins:
 
 resources:
   Resources:
+    # This response is needed for custom authorizer failures cors support ¯\_(ツ)_/¯
+    # @see https://github.com/serverless/examples/blob/master/aws-node-auth0-custom-authorizers-api/serverless.yml
+    # @see https://docs.aws.amazon.com/apigateway/latest/developerguide/supported-gateway-response-types.html
+    UnauthorizedGatewayResponse:
+      Type: AWS::ApiGateway::GatewayResponse
+      Properties:
+        ResponseParameters:
+          gatewayresponse.header.Access-Control-Allow-Origin: "'*'"
+          gatewayresponse.header.Access-Control-Allow-Headers: "'*'"
+        ResponseType: UNAUTHORIZED
+        RestApiId:
+          Ref: ApiGatewayRestApi
+        StatusCode: 401
+    AccessDeniedGatewayResponse:
+      Type: AWS::ApiGateway::GatewayResponse
+      Properties:
+        ResponseParameters:
+          gatewayresponse.header.Access-Control-Allow-Origin: "'*'"
+          gatewayresponse.header.Access-Control-Allow-Headers: "'*'"
+        ResponseType: ACCESS_DENIED
+        RestApiId:
+          Ref: ApiGatewayRestApi
+        StatusCode: 403
     SqsQueue:
       Type: AWS::SQS::Queue
       Properties:
