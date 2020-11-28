@@ -3,7 +3,7 @@ import generatePolicy from './generatePolicy';
 /**
  * @see https://docs.aws.amazon.com/apigateway/latest/developerguide/apigateway-use-lambda-authorizer.html#api-gateway-lambda-authorizer-lambda-function-create
  */
-export default (event, context, callback) => {
+export default pool => (event, context, callback) => {
   console.log('basicAuthorizer triggered:', event);
 
   if (event.type !== 'TOKEN' || !event.authorizationToken) {
@@ -24,10 +24,7 @@ export default (event, context, callback) => {
     return;
   }
 
-  // TODO: Approach?
-  const storedUserPassword = process.env[username];
-  const isAllowed = storedUserPassword && storedUserPassword === password;
-
+  const isAllowed = pool.validateCredentials(username, password);
   const policy = generatePolicy(encoded, isAllowed, event.methodArn);
 
   callback(null, policy);
