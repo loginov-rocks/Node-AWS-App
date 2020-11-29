@@ -5,10 +5,13 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import AccountCircle from '@material-ui/icons/AccountCircle';
+import LockOpenIcon from '@material-ui/icons/LockOpen';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 import Cart from "components/MainLayout/components/Cart";
 import {Link} from 'react-router-dom';
+
+import { COGNITO_HOSTED_UI } from 'constants/auth';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -34,6 +37,10 @@ export default function Header() {
   const open = Boolean(anchorEl);
   const auth = true;
 
+  const handleLogin = () => {
+    window.location.href = COGNITO_HOSTED_UI;
+  }
+
   const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
@@ -48,6 +55,10 @@ export default function Header() {
         <Typography variant="h6" className={classes.title}>
           <Link className={classes.homeLink} to="/">Vehicle Subscription</Link>
         </Typography>
+
+        <IconButton color="inherit" onClick={handleLogin}>
+          <LockOpenIcon />
+        </IconButton>
 
         {auth && (
           <div>
