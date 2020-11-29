@@ -39,8 +39,7 @@ plugins:
 
 resources:
   Resources:
-    # This response is needed for custom authorizer failures cors support ¯\_(ツ)_/¯
-    # @see https://github.com/serverless/examples/blob/master/aws-node-auth0-custom-authorizers-api/serverless.yml
+    # @see https://github.com/serverless/serverless/issues/3896
     # @see https://docs.aws.amazon.com/apigateway/latest/developerguide/supported-gateway-response-types.html
     UnauthorizedGatewayResponse:
       Type: AWS::ApiGateway::GatewayResponse

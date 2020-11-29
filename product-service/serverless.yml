@@ -34,6 +34,28 @@ plugins:
 
 resources:
   Resources:
+    # @see https://github.com/serverless/serverless/issues/3896
+    # @see https://docs.aws.amazon.com/apigateway/latest/developerguide/supported-gateway-response-types.html
+    UnauthorizedGatewayResponse:
+      Type: AWS::ApiGateway::GatewayResponse
+      Properties:
+        ResponseParameters:
+          gatewayresponse.header.Access-Control-Allow-Origin: "'*'"
+          gatewayresponse.header.Access-Control-Allow-Headers: "'*'"
+        ResponseType: UNAUTHORIZED
+        RestApiId:
+          Ref: ApiGatewayRestApi
+        StatusCode: 401
+    AccessDeniedGatewayResponse:
+      Type: AWS::ApiGateway::GatewayResponse
+      Properties:
+        ResponseParameters:
+          gatewayresponse.header.Access-Control-Allow-Origin: "'*'"
+          gatewayresponse.header.Access-Control-Allow-Headers: "'*'"
+        ResponseType: ACCESS_DENIED
+        RestApiId:
+          Ref: ApiGatewayRestApi
+        StatusCode: 403
     SnsSubscriptionSingle:
       Type: AWS::SNS::Subscription
       Properties:
@@ -78,6 +100,7 @@ functions:
           path: products
           method: post
           cors: true
+          authorizer: ${env:COGNITO_USER_POOL_ARN}
   getProductsList:
     handler: handler.getProductsList
     events:
@@ -85,6 +108,7 @@ functions:
           path: products
           method: get
           cors: true
+          authorizer: ${env:COGNITO_USER_POOL_ARN}
   getProductById:
     handler: handler.getProductById
     events:
@@ -92,6 +116,7 @@ functions:
           path: products/{id}
           method: get
           cors: true
+          authorizer: ${env:COGNITO_USER_POOL_ARN}
           request:
             parameters:
               paths:
