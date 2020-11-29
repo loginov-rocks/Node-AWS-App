@@ -1,12 +1,19 @@
+import CssBaseline from '@material-ui/core/CssBaseline';
+import axios from 'axios';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import 'index.css';
+import { Provider } from 'react-redux';
+
 import App from 'components/App/App';
-import {store} from 'store/store';
-import {Provider} from 'react-redux';
+import { AUTH_DATA_STORAGE_KEY } from 'constants/auth';
+import { store } from 'store/store';
+import Auth from 'utils/auth';
+
 import * as serviceWorker from './serviceWorker';
-import CssBaseline from "@material-ui/core/CssBaseline";
-import axios from 'axios';
+import 'index.css';
+
+const auth = new Auth(axios, window.localStorage, AUTH_DATA_STORAGE_KEY);
+auth.useAuth();
 
 axios.interceptors.response.use(
   response => {
@@ -30,7 +37,7 @@ ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
       <CssBaseline/>
-      <App/>
+      <App auth={auth} />
     </Provider>
   </React.StrictMode>,
   document.getElementById('root')
