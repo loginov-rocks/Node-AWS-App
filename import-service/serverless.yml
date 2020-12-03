@@ -50,7 +50,6 @@ resources:
         ResponseType: UNAUTHORIZED
         RestApiId:
           Ref: ApiGatewayRestApi
-        StatusCode: 401
     AccessDeniedGatewayResponse:
       Type: AWS::ApiGateway::GatewayResponse
       Properties:
@@ -60,7 +59,15 @@ resources:
         ResponseType: ACCESS_DENIED
         RestApiId:
           Ref: ApiGatewayRestApi
-        StatusCode: 403
+    Default4XXGatewayResponse:
+      Type: AWS::ApiGateway::GatewayResponse
+      Properties:
+        ResponseParameters:
+          gatewayresponse.header.Access-Control-Allow-Origin: "'*'"
+          gatewayresponse.header.Access-Control-Allow-Headers: "'*'"
+        ResponseType: DEFAULT_4XX
+        RestApiId:
+          Ref: ApiGatewayRestApi
     SqsQueue:
       Type: AWS::SQS::Queue
       Properties:
