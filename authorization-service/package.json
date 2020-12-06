@@ -1,5 +1,5 @@
 {
-  "name": "import-service",
+  "name": "authorization-service",
   "version": "0.0.0",
   "license": "MIT",
   "private": true,
@@ -8,14 +8,9 @@
     "test": "jest",
     "test:coverage": "jest --coverage"
   },
-  "dependencies": {
-    "aws-sdk": "^2.790.0",
-    "csv-parser": "^2.3.3"
-  },
   "devDependencies": {
     "@babel/core": "^7.12.3",
     "@babel/preset-env": "^7.12.1",
-    "aws-sdk-mock": "^5.1.0",
     "babel-jest": "^26.6.1",
     "babel-loader": "^8.1.0",
     "jest": "^26.6.1",

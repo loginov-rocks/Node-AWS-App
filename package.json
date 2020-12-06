@@ -4,13 +4,16 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "deploy": "npm run deploy:import-service && npm run deploy:product-service",
+    "deploy": "npm run deploy:authorization-service && npm run deploy:import-service && npm run deploy:product-service",
+    "deploy:authorization-service": "cd authorization-service && npm run deploy",
     "deploy:import-service": "cd import-service && npm run deploy",
     "deploy:product-service": "cd product-service && npm run deploy",
-    "test": "npm run test:import-service && npm run test:product-service",
+    "test": "npm run test:authorization-service && npm run test:import-service && npm run test:product-service",
+    "test:authorization-service": "cd authorization-service && npm test",
     "test:import-service": "cd import-service && npm test",
     "test:product-service": "cd product-service && npm test",
-    "test:coverage": "npm run test:coverage:import-service && npm run test:coverage:product-service",
+    "test:coverage": "npm run test:coverage:authorization-service && npm run test:coverage:import-service && npm run test:coverage:product-service",
+    "test:coverage:authorization-service": "cd authorization-service && npm run test:coverage",
     "test:coverage:import-service": "cd import-service && npm run test:coverage",
     "test:coverage:product-service": "cd product-service && npm run test:coverage"
   }

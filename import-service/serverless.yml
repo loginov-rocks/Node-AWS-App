@@ -2,6 +2,7 @@ service: import-service
 
 custom:
   # Variables not exposed to the application.
+  authorizerName: authorization-service-dev-basicAuthorizer
   sqsQueueName: catalogItemsQueue
 
 provider:
@@ -12,11 +13,6 @@ provider:
 
   environment:
     # Variables exposed to the application.
-    S3_BUCKET_NAME: bucket
-    S3_PARSED_PREFIX: parsed/
-    S3_REGION: eu-central-1
-    S3_UPLOADED_PREFIX: uploaded/
-
     SQS_QUEUE_URL:
       Ref: SqsQueue
 
@@ -38,10 +34,40 @@ provider:
         - !GetAtt SqsQueue.Arn
 
 plugins:
+  - serverless-dotenv-plugin
   - serverless-plugin-webpack
 
 resources:
   Resources:
+    # @see https://github.com/serverless/serverless/issues/3896
+    # @see https://docs.aws.amazon.com/apigateway/latest/developerguide/supported-gateway-response-types.html
+    UnauthorizedGatewayResponse:
+      Type: AWS::ApiGateway::GatewayResponse
+      Properties:
+        ResponseParameters:
+          gatewayresponse.header.Access-Control-Allow-Origin: "'*'"
+          gatewayresponse.header.Access-Control-Allow-Headers: "'*'"
+        ResponseType: UNAUTHORIZED
+        RestApiId:
+          Ref: ApiGatewayRestApi
+    AccessDeniedGatewayResponse:
+      Type: AWS::ApiGateway::GatewayResponse
+      Properties:
+        ResponseParameters:
+          gatewayresponse.header.Access-Control-Allow-Origin: "'*'"
+          gatewayresponse.header.Access-Control-Allow-Headers: "'*'"
+        ResponseType: ACCESS_DENIED
+        RestApiId:
+          Ref: ApiGatewayRestApi
+    Default4XXGatewayResponse:
+      Type: AWS::ApiGateway::GatewayResponse
+      Properties:
+        ResponseParameters:
+          gatewayresponse.header.Access-Control-Allow-Origin: "'*'"
+          gatewayresponse.header.Access-Control-Allow-Headers: "'*'"
+        ResponseType: DEFAULT_4XX
+        RestApiId:
+          Ref: ApiGatewayRestApi
     SqsQueue:
       Type: AWS::SQS::Queue
       Properties:
@@ -73,3 +99,9 @@ functions:
             parameters:
               querystrings:
                 name: true
+          authorizer:
+            name: basicAuthorizer
+            arn: !Sub arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:${self:custom.authorizerName}
+            resultTtlInSeconds: 0
+            identitySource: method.request.header.Authorization
+            type: token

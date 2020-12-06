@@ -1,0 +1,15 @@
+service: authorization-service
+
+provider:
+  name: aws
+  region: eu-central-1
+  runtime: nodejs12.x
+  profile: danila_loginov
+
+plugins:
+  - serverless-dotenv-plugin
+  - serverless-plugin-webpack
+
+functions:
+  basicAuthorizer:
+    handler: handler.basicAuthorizer

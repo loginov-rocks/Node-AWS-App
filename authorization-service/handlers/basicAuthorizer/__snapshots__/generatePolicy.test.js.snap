@@ -1,0 +1,17 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`generates valid policy 1`] = `
+Object {
+  "policyDocument": Object {
+    "Statement": Array [
+      Object {
+        "Action": "execute-api:Invoke",
+        "Effect": "Allow",
+        "Resource": "arn",
+      },
+    ],
+    "Version": "2012-10-17",
+  },
+  "principalId": "principal",
+}
+`;
