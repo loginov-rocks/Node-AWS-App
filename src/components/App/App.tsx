@@ -1,19 +1,27 @@
 import React from 'react';
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+
 import 'components/App/App.css';
 import PageProducts from "components/pages/PageProducts/PageProducts";
 import MainLayout from "components/MainLayout/MainLayout";
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-} from "react-router-dom";
 import PageProductForm from "components/pages/PageProductForm/PageProductForm";
 import PageCart from "components/pages/PageCart/PageCart";
 import PageOrders from "components/pages/PageOrders/PageOrders";
 import PageOrder from "components/pages/PageOrder/PageOrder";
 import PageProductImport from "components/pages/admin/PageProductImport/PageProductImport";
+import Auth from 'utils/auth';
 
-function App() {
+interface Props {
+  auth: Auth;
+}
+
+function App({ auth }: Props) {
+  React.useEffect(() => {
+    // Parse hash string and clear if auth data found there.
+    if (auth.parseQueryString(window.location.hash.substr(1))) {
+      window.location.hash = '';
+    }
+  }, [auth]);
 
   return (
     <Router>
