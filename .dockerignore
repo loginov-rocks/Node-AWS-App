@@ -1,0 +1,11 @@
+# Build artifacts and dependencies from the host machine are not used.
+dist
+node_modules
+
+# Who wants to have Git in their running app?
+.git
+.gitignore
+
+# Tests are not required by the build or runtime of the app.
+test
+**/*.spec.ts
