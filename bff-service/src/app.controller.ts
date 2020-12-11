@@ -1,12 +1,20 @@
-import { Controller, Get } from '@nestjs/common';
-import { AppService } from './app.service';
+import { All, Controller, Req } from '@nestjs/common';
+import { Request } from 'express';
+
+import { DiscoveryService } from './discovery.service';
 
 @Controller()
 export class AppController {
-  constructor(private readonly appService: AppService) {}
+  constructor(private readonly discoveryService: DiscoveryService) {
+  }
 
-  @Get()
-  getHello(): string {
-    return this.appService.getHello();
+  @All()
+  proxy(@Req() req: Request) {
+    const url = this.discoveryService.getEndpointUrl(req.path);
+
+    return [
+      url,
+      req.method,
+    ];
   }
 }
