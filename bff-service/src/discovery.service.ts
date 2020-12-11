@@ -22,14 +22,20 @@ export class DiscoveryService {
   }
 
   /**
-   * Get full endpoint URL for the discovered service.
+   * Parse requested path to discover recipient service and build endpoint URL.
    */
-  public getEndpointUrl(path: string): string {
-    const [, serviceName, ...servicePathParts] = path.split('/');
+  public discoverEndpoint(path: string): { serviceName: string, servicePath: string, serviceUrl: string, url: string } {
+    const [, serviceName, ...rawServicePathParts] = path.split('/');
     const serviceUrl = this.getServiceUrl(serviceName);
+    const servicePathParts = rawServicePathParts.filter(part => part !== '');
     const servicePath = servicePathParts.length > 0 ? `/${servicePathParts.join('/')}` : '';
 
-    // Query string is omitted intentionally since there is no requirement to pass it.
-    return serviceUrl + servicePath;
+    return {
+      serviceName,
+      servicePath,
+      serviceUrl,
+      // Query string is omitted intentionally since there is no requirement to pass it.
+      url: serviceUrl + servicePath,
+    };
   }
 }
