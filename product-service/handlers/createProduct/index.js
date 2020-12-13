@@ -15,7 +15,7 @@ export default database => async event => {
   }
 
   if (!count || !description || !price || !title) {
-    throw new BadRequestHttpError('Missing description, price or title attributes');
+    throw new BadRequestHttpError('Missing count, description, price or title attributes');
   }
 
   const product = await database.createProduct({ count, description, price, title });

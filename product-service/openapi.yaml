@@ -109,6 +109,8 @@ components:
           schema:
             type: object
             properties:
+              count:
+                type: number
               description:
                 type: string
               price:
@@ -116,6 +118,7 @@ components:
               title:
                 type: string
             required:
+              - count
               - description
               - price
               - title
