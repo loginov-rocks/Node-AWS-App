@@ -4,6 +4,7 @@
     <content url="file://$MODULE_DIR$">
       <excludeFolder url="file://$MODULE_DIR$/authorization-service/.serverless" />
       <excludeFolder url="file://$MODULE_DIR$/authorization-service/coverage" />
+      <excludeFolder url="file://$MODULE_DIR$/bff-service/dist" />
       <excludeFolder url="file://$MODULE_DIR$/import-service/.serverless" />
       <excludeFolder url="file://$MODULE_DIR$/import-service/coverage" />
       <excludeFolder url="file://$MODULE_DIR$/product-service/.serverless" />
