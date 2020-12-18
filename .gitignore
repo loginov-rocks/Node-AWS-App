@@ -104,3 +104,9 @@ dist
 .tern-port
 
 .serverless
+
+# production
+build
+
+# misc
+.DS_Store
