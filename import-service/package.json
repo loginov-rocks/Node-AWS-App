@@ -1,13 +1,17 @@
 {
-  "name": "import-service",
+  "name": "@loginov-rocks/node-aws-app-import-service",
   "version": "0.0.0",
-  "license": "MIT",
-  "private": true,
   "scripts": {
     "deploy": "serverless deploy",
     "test": "jest",
     "test:coverage": "jest --coverage"
   },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:loginov-rocks/Node-AWS-App.git"
+  },
+  "license": "MIT",
+  "private": true,
   "dependencies": {
     "aws-sdk": "^2.790.0",
     "csv-parser": "^2.3.3"

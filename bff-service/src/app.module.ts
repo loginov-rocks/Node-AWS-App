@@ -6,18 +6,8 @@ import { DiscoveryService } from './discovery.service';
 import { ProxyService } from './proxy.service';
 
 @Module({
-  imports: [
-    CacheModule.register(),
-    ConfigModule.forRoot(),
-    HttpModule,
-  ],
-  controllers: [
-    AppController,
-  ],
-  providers: [
-    DiscoveryService,
-    ProxyService,
-  ],
+  imports: [CacheModule.register(), ConfigModule.forRoot(), HttpModule],
+  controllers: [AppController],
+  providers: [DiscoveryService, ProxyService],
 })
-export class AppModule {
-}
+export class AppModule {}

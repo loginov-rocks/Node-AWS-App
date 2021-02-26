@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/nodejs-aws-be.iml" filepath="$PROJECT_DIR$/.idea/nodejs-aws-be.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/Node-AWS-App.iml" filepath="$PROJECT_DIR$/.idea/Node-AWS-App.iml" />
     </modules>
   </component>
 </project>

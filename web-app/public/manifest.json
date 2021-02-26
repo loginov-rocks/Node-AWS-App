@@ -1,6 +1,6 @@
 {
-  "short_name": "Vehicle Subscription",
-  "name": "Vehicle Subscription Service",
+  "short_name": "Node AWS App",
+  "name": "Node AWS App",
   "icons": [
     {
       "src": "favicon.ico",

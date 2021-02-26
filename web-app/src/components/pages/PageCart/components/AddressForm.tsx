@@ -4,12 +4,10 @@ import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
-import {ProductSchema} from "models/Product";
-import {Field, Formik, FormikProps, FormikValues} from "formik";
-import Button from "@material-ui/core/Button";
-import * as Yup from "yup";
-
-
+import { ProductSchema } from 'models/Product';
+import { Field, Formik, FormikProps, FormikValues } from 'formik';
+import Button from '@material-ui/core/Button';
+import * as Yup from 'yup';
 
 // type AddressFormProps = {
 //   initialValues: object,

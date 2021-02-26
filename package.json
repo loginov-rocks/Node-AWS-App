@@ -1,8 +1,6 @@
 {
-  "name": "nodejs-aws-be",
+  "name": "@loginov-rocks/node-aws-app",
   "version": "0.0.0",
-  "license": "MIT",
-  "private": true,
   "scripts": {
     "deploy": "npm run deploy:authorization-service && npm run deploy:import-service && npm run deploy:product-service",
     "deploy:authorization-service": "cd authorization-service && npm run deploy",
@@ -16,5 +14,11 @@
     "test:coverage:authorization-service": "cd authorization-service && npm run test:coverage",
     "test:coverage:import-service": "cd import-service && npm run test:coverage",
     "test:coverage:product-service": "cd product-service && npm run test:coverage"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:loginov-rocks/Node-AWS-App.git"
+  },
+  "license": "MIT",
+  "private": true
 }

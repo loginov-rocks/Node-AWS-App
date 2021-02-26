@@ -9,7 +9,7 @@ export class CartService {
   private userCarts: Record<string, Cart> = {};
 
   findByUserId(userId: string): Cart {
-    return this.userCarts[ userId ];
+    return this.userCarts[userId];
   }
 
   createByUserId(userId: string) {
@@ -19,7 +19,7 @@ export class CartService {
       items: [],
     };
 
-    this.userCarts[ userId ] = userCart;
+    this.userCarts[userId] = userCart;
 
     return userCart;
   }
@@ -40,16 +40,15 @@ export class CartService {
     const updatedCart = {
       id,
       ...rest,
-      items: [ ...items ],
-    }
+      items: [...items],
+    };
 
-    this.userCarts[ userId ] = { ...updatedCart };
+    this.userCarts[userId] = { ...updatedCart };
 
     return { ...updatedCart };
   }
 
   removeByUserId(userId): void {
-    this.userCarts[ userId ] = null;
+    this.userCarts[userId] = null;
   }
-
 }

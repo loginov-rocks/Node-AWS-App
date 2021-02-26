@@ -1,8 +1,8 @@
-import {createSlice, PayloadAction} from '@reduxjs/toolkit';
-import {RootState} from 'store/store';
-import {Product} from "models/Product";
-import {CartItem} from "models/CartItem";
-import API_PATHS from "../constants/apiPaths";
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { RootState } from 'store/store';
+import { Product } from 'models/Product';
+import { CartItem } from 'models/CartItem';
+import API_PATHS from '../constants/apiPaths';
 import axios from 'axios';
 
 interface CartState {
@@ -20,25 +20,25 @@ export const cartSlice = createSlice({
     updateFromApi: (state, { payload: { items } }: PayloadAction<CartState>) => {
       return {
         items: [
-            ...items,
+          ...items,
         ],
-      }
+      };
     },
     // Use the PayloadAction type to declare the contents of `action.payload`
     addToCart: (state, action: PayloadAction<Product>) => {
-      const {items} = state;
-      const {payload: product} = action;
+      const { items } = state;
+      const { payload: product } = action;
       const existingItem = items.find(i => i.product.id === product.id);
       if (existingItem) {
         existingItem.count++;
         return;
       }
-      items.push({product, count: 1});
+      items.push({ product, count: 1 });
     },
     // Use the PayloadAction type to declare the contents of `action.payload`
     removeFromCart: (state, action: PayloadAction<Product>) => {
-      let {items} = state;
-      const {payload: product} = action;
+      let { items } = state;
+      const { payload: product } = action;
       const existingItem = items.find(i => i.product.id === product.id);
       if (!existingItem) return;
       if (existingItem.count > 1) {
@@ -49,7 +49,7 @@ export const cartSlice = createSlice({
     },
     clearCart: (state) => {
       state.items = [];
-    }
+    },
   },
 });
 
@@ -60,7 +60,7 @@ export const addToCart = (product: Product) => async (dispatch: any, getState: a
     headers: {
       Authorization: `Basic ${localStorage.getItem('authorization_token')}`,
     },
-  })
+  });
 };
 
 export const removeFromCart = (product: Product) => async (dispatch: any, getState: any) => {
@@ -70,7 +70,7 @@ export const removeFromCart = (product: Product) => async (dispatch: any, getSta
     headers: {
       Authorization: `Basic ${localStorage.getItem('authorization_token')}`,
     },
-  })
+  });
 };
 
 export const clearCart = () => async (dispatch: any, getState: any) => {
@@ -80,11 +80,10 @@ export const clearCart = () => async (dispatch: any, getState: any) => {
     headers: {
       Authorization: `Basic ${localStorage.getItem('authorization_token')}`,
     },
-  })
+  });
 };
 
-export const {updateFromApi} = cartSlice.actions;
-
+export const { updateFromApi } = cartSlice.actions;
 
 // The function below is called a selector and allows us to select a value from
 // the state. Selectors can also be defined inline where they're used instead of

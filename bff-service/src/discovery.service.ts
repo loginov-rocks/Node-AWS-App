@@ -3,8 +3,7 @@ import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class DiscoveryService {
-  constructor(private readonly configService: ConfigService) {
-  }
+  constructor(private readonly configService: ConfigService) {}
 
   /**
    * Discover service URL by name with the help of the environment variables.
@@ -24,11 +23,19 @@ export class DiscoveryService {
   /**
    * Parse requested path to discover recipient service and build endpoint URL.
    */
-  public discoverEndpoint(path: string): { serviceName: string, servicePath: string, serviceUrl: string, url: string } {
+  public discoverEndpoint(
+    path: string,
+  ): {
+    serviceName: string;
+    servicePath: string;
+    serviceUrl: string;
+    url: string;
+  } {
     const [, serviceName, ...rawServicePathParts] = path.split('/');
     const serviceUrl = this.getServiceUrl(serviceName);
-    const servicePathParts = rawServicePathParts.filter(part => part !== '');
-    const servicePath = servicePathParts.length > 0 ? `/${servicePathParts.join('/')}` : '';
+    const servicePathParts = rawServicePathParts.filter((part) => part !== '');
+    const servicePath =
+      servicePathParts.length > 0 ? `/${servicePathParts.join('/')}` : '';
 
     return {
       serviceName,

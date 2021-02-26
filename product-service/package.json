@@ -1,13 +1,17 @@
 {
-  "name": "product-service",
+  "name": "@loginov-rocks/node-aws-app-product-service",
   "version": "0.0.0",
-  "license": "MIT",
-  "private": true,
   "scripts": {
     "deploy": "serverless deploy",
     "test": "jest",
     "test:coverage": "jest --coverage"
   },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:loginov-rocks/Node-AWS-App.git"
+  },
+  "license": "MIT",
+  "private": true,
   "dependencies": {
     "pg": "^8.4.2"
   },

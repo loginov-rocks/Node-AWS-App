@@ -1,13 +1,17 @@
 {
-  "name": "authorization-service",
+  "name": "@loginov-rocks/node-aws-app-authorization-service",
   "version": "0.0.0",
-  "license": "MIT",
-  "private": true,
   "scripts": {
     "deploy": "serverless deploy",
     "test": "jest",
     "test:coverage": "jest --coverage"
   },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:loginov-rocks/Node-AWS-App.git"
+  },
+  "license": "MIT",
+  "private": true,
   "devDependencies": {
     "@babel/core": "^7.12.3",
     "@babel/preset-env": "^7.12.1",
