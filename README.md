@@ -1,14 +1,24 @@
-# nodejs-aws-be
+# Node AWS App
 
-Business Domain: Vehicle Subscription
+Monorepo for an application built completely with JavaScript, based on React and Nest frameworks and combining
+serverless and containerized approach on AWS.
 
-Front end: https://github.com/loginov-rocks/nodejs-aws-fe
+The application represents a basic shop with a products catalog, that can be updated by the CSV ingestion,
+authentication, and a shopping cart. So it can be used as a ground for a full-featured application. 
+
+Architecture and implementation were done during the first run of RS School course
+[NodeJS in AWS](https://rs.school/nodejs-aws/), and some parts of the codebase were forked from the
+[RS School repositories](https://github.com/rolling-scopes-school).
 
 ## Architecture
 
-![Architecture](https://raw.githubusercontent.com/loginov-rocks/nodejs-aws-be/main/docs/Architecture.png)
+Tech Stack: JavaScript, TypeScript, React, Node.js, NestJS, PostgreSQL, Docker, Serverless framework.
 
-## Deployment
+AWS Stack: S3, CloudFront, API Gateway, Lambda, ELB, RDS, SQS, SNS, Cognito, CloudFormation.
+
+![Architecture Diagram](https://raw.githubusercontent.com/loginov-rocks/Node-AWS-App/main/docs/Architecture.png)
+
+## Deployment Tips
 
 ### BFF Service
 
